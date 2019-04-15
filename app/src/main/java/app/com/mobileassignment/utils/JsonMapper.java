@@ -12,15 +12,14 @@ import app.com.mobileassignment.model.City;
 
 public class JsonMapper {
 
-
-    public List<City> getCityListFromRawFile(Context context, int rawFileId){
+    public List<City> getCityListFromRawFile(Context context, int rawFileId) {
         List<City> cityList = null;
 
         ObjectMapper mapper = new ObjectMapper();
         InputStream is = context.getResources().openRawResource(rawFileId);
         try {
             byte[] buffer = new byte[is.available()];
-            while (is.read(buffer) != -1);
+            while (is.read(buffer) != -1) ;
             String jsontext = new String(buffer);
             cityList = mapper.readValue(jsontext, mapper.getTypeFactory().constructCollectionType(List.class, City.class));
 

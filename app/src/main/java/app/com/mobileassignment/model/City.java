@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class City implements Comparable<City>{
 
-    String country;
-    String name;
-    int id;
-    Coordinates coordinates;
+    private String country;
+    private String name;
+    private int id;
+    private Coordinates coordinates;
 
     public String getCountry() {
         return country;

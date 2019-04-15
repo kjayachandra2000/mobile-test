@@ -16,7 +16,12 @@ import android.widget.ProgressBar;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.espresso.IdlingResource;
+import app.com.mobileassignment.utils.IdlingResource.SimpleIdlingResource;
 import app.com.mobileassignment.views.adapters.CityAdapter;
 import app.com.mobileassignment.R;
 import app.com.mobileassignment.model.City;
@@ -32,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Adap
     CityAdapter adapter;
     ProgressBar progressBar;
     LinearLayout layout;
+
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Adap
             super.onPostExecute(cities);
             Collections.sort(cities);
 
-            adapter = new CityAdapter(MainActivity.this, cities);
+            adapter = new CityAdapter(MainActivity.this, cities,mIdlingResource);
             citiesListView.setAdapter(adapter);
             progressBar.setVisibility(View.GONE);
             layout.setVisibility(View.VISIBLE);
@@ -95,5 +103,15 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Adap
         }
     }
 
-
+    /**
+     * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
+     */
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
 }

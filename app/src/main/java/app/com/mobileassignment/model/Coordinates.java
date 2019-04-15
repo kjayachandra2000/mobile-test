@@ -2,8 +2,8 @@ package app.com.mobileassignment.model;
 
 public class Coordinates {
 
-    float lon;
-    float lat;
+    private float lon;
+    private float lat;
 
 
     public float getLon() {

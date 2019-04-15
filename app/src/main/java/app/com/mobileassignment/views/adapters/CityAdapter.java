@@ -11,19 +11,23 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import app.com.mobileassignment.R;
 import app.com.mobileassignment.model.City;
+import app.com.mobileassignment.utils.IdlingResource.SimpleIdlingResource;
 
 public class CityAdapter extends ArrayAdapter<City> {
 
     private List<City> cityList;
-    private List<City>filteredCityListData;
+    private List<City> filteredCityListData;
+    @Nullable
+    private SimpleIdlingResource idlingResource;
 
-
-    public CityAdapter(Context context, List<City> cityList) {
+    public CityAdapter(Context context, List<City> cityList, @Nullable final SimpleIdlingResource idlingResource) {
         super(context, 0, cityList);
         this.cityList = cityList;
         this.filteredCityListData = cityList;
+        this.idlingResource = idlingResource;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class CityAdapter extends ArrayAdapter<City> {
 
     @Override
     public City getItem(int i) {
-        return filteredCityListData.get(i) ;
+        return filteredCityListData.get(i);
     }
 
     @Override
@@ -42,7 +46,7 @@ public class CityAdapter extends ArrayAdapter<City> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         City city = getItem(position);
 
@@ -52,10 +56,10 @@ public class CityAdapter extends ArrayAdapter<City> {
             holder.cityNameTextView = ((TextView) convertView.findViewById(R.id.cityName));
             convertView.setTag(holder);
 
-        }else{
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.cityNameTextView.setText(city.getName()+", "+city.getCountry());
+        holder.cityNameTextView.setText(city.getName() + ", " + city.getCountry());
         return convertView;
     }
 
@@ -70,8 +74,10 @@ public class CityAdapter extends ArrayAdapter<City> {
 
                 int count = cityList.size();
                 final List<City> resultList = new ArrayList<City>(count);
-
-                for(City filterableCity: cityList){
+                if (idlingResource != null) {
+                    idlingResource.setIdleState(false);
+                }
+                for (City filterableCity : cityList) {
                     if (filterableCity.getName().toLowerCase().startsWith(filterString)) {
                         resultList.add(filterableCity);
                     }
@@ -87,6 +93,9 @@ public class CityAdapter extends ArrayAdapter<City> {
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 filteredCityListData = (List<City>) filterResults.values;
                 notifyDataSetChanged();
+                if (idlingResource != null) {
+                    idlingResource.setIdleState(true);
+                }
             }
         };
     }

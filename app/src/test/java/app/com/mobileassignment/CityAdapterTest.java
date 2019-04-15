@@ -28,10 +28,10 @@ import static org.junit.Assert.*;
 @Config(manifest = "src/main/AndroidManifest.xml", sdk = Build.VERSION_CODES.KITKAT)
 public class CityAdapterTest {
 
-    CityAdapter adapter;
-    Context context;
-    List<City> cityList;
-    JsonMapper jsonMapper;
+    private CityAdapter adapter;
+    private Context context;
+    private List<City> cityList;
+    private JsonMapper jsonMapper;
 
 
     @Before
@@ -41,8 +41,6 @@ public class CityAdapterTest {
         jsonMapper = new JsonMapper();
         populateCityList();
     }
-
-
 
     @After
     public void tearDown(){
@@ -59,14 +57,14 @@ public class CityAdapterTest {
     @Test
     public void testAdapterNullList() throws Exception {
         cityList.clear();
-        adapter = new CityAdapter(context, cityList);
+        adapter = new CityAdapter(context, cityList,null);
         assertEquals(0, adapter.getCount());
     }
 
     @Test
     public void testAdapterFilterabilityWithOneChar(){
 
-        adapter = new CityAdapter(context, cityList);
+        adapter = new CityAdapter(context, cityList,null);
         adapter.getFilter().filter("A", new Filter.FilterListener() {
             @Override
             public void onFilterComplete(int i) {
@@ -78,7 +76,7 @@ public class CityAdapterTest {
     @Test
     public void testAdapterFilterabilityWithMalaga(){
 
-        adapter = new CityAdapter(context, cityList);
+        adapter = new CityAdapter(context, cityList,null);
         adapter.getFilter().filter("Malaga", new Filter.FilterListener() {
             @Override
             public void onFilterComplete(int i) {
@@ -93,7 +91,7 @@ public class CityAdapterTest {
     @Test
     public void testAdapterFilterabilityWithHilversum(){
 
-        adapter = new CityAdapter(context, cityList);
+        adapter = new CityAdapter(context, cityList,null);
         adapter.getFilter().filter("Hilversum", new Filter.FilterListener() {
             @Override
             public void onFilterComplete(int i) {
@@ -108,7 +106,7 @@ public class CityAdapterTest {
     @Test
     public void testAdapterFilterabiltiyWithUnkownCity(){
 
-        adapter = new CityAdapter(context, cityList);
+        adapter = new CityAdapter(context, cityList,null);
         adapter.getFilter().filter("ACityWithNoName", new Filter.FilterListener() {
             @Override
             public void onFilterComplete(int i) {
