@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Adap
 
     public static final String COORDINATES_LAT = "COORDINATES_LAT";
     public static final String COORDINATES_LON = "COORDINATES_LON";
+    public static final String CITY_NAME = "CITY_NAME";
 
     ListView citiesListView;
     EditText search;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Adap
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra(COORDINATES_LAT, city.getCoord().getLat());
         intent.putExtra(COORDINATES_LON, city.getCoord().getLon());
+        intent.putExtra(CITY_NAME, city.getName());
         startActivity(intent);
     }
 

@@ -18,6 +18,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private float latitude;
     private float longitude;
+    private String cityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         latitude = intent.getFloatExtra(MainActivity.COORDINATES_LAT, 0.0f);
         longitude = intent.getFloatExtra(MainActivity.COORDINATES_LON, 0.0f);
-
+        cityName = intent.getStringExtra(MainActivity.CITY_NAME);
 
         MapFragment mMapFragment = MapFragment.newInstance();
         FragmentTransaction fragmentTransaction =
@@ -43,7 +44,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.setMinZoomPreference(5);
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude))
+                .title(cityName)).showInfoWindow();
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
 
     }
