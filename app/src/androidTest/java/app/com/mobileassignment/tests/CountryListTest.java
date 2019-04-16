@@ -24,6 +24,6 @@ public class CountryListTest extends BaseTest {
         new ListScreen()
                 .GivenISearchFor(CITY_NAME)
                 .WhenISelectTheCity(CITY_NAME, POSITION)
-                .ThenIShouldSeeMap();
+                .ThenIShouldSeeGooglePointerWithTitleAs(CITY_NAME);
     }
 }

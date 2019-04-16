@@ -3,6 +3,7 @@ package app.com.mobileassignment.tests;
 import org.junit.After;
 import org.junit.Before;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
@@ -10,7 +11,7 @@ import app.com.mobileassignment.views.MainActivity;
 
 public class BaseTest {
 
-    private IdlingResource mIdlingResource;
+    public IdlingResource mIdlingResource;
 
     @Before
     public void registerIdlingResource() {
